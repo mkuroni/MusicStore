@@ -13,11 +13,9 @@
 		ExtendClientAreaToDecorationsHint="True">
 	<!--Transparency... Fait un effet flou sur le fond-->
 	<!--ExtendClient... Étends le style de la fenêtre jusque dans la barre de titre-->
-
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
-
 	<!--Donne un effet acrylique à la fenêtre-->
 	<Panel>
 		<ExperimentalAcrylicBorder IsHitTestVisible="False">
