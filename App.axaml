@@ -8,5 +8,7 @@
 
     <Application.Styles>
         <FluentTheme Mode="Dark"/>
+		<!--Inclu le fichier de style créé-->
+		<StyleInclude Source="avares://MusicStore/Icons.axaml"/>
     </Application.Styles>
 </Application>
