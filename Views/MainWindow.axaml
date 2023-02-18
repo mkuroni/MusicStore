@@ -3,16 +3,18 @@
         xmlns:vm="using:MusicStore.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d"
         x:Class="MusicStore.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="MusicStore"
 		
 		TransparencyLevelHint="AcrylicBlur"
         Background="Transparent"
-		ExtendClientAreaToDecorationsHint="True">
+		ExtendClientAreaToDecorationsHint="True"
+		WindowStartupLocation="CenterScreen"
+		Width="1200" Height="820">
 	<!--Transparency... Fait un effet flou sur le fond-->
-	<!--ExtendClient... Étends le style de la fenêtre jusque dans la barre de titre-->
+	<!--ExtendClient... Étends le style de la fenêtre jusque dans la barre de titre (Linux ne le supporte pas)-->
 	<Design.DataContext>
 		<vm:MainWindowViewModel/>
 	</Design.DataContext>
