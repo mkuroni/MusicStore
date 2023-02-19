@@ -15,21 +15,58 @@ namespace MusicStore.ViewModels
     /// </summary>
     public class AlbumViewModel : ViewModelBase
     {
+        /// <summary>
+        /// Constructeur d'un albumViewModel
+        /// </summary>
+        /// <param name="album">On a seulement besoin d'un album</param>
+        public AlbumViewModel(Album album)
+        {
+            _album = album;
+        }
+
         private readonly Album _album;
         private Bitmap? _cover;
 
+        /// <summary>
+        /// Nom du groupe ou de l'artiste de l'Album.
+        /// </summary>
         public string Artist => _album.Artist;
+
+        /// <summary>
+        /// Titre de l'Album.
+        /// </summary>
         public string Title => _album.Title;
 
+        /// <summary>
+        /// L'image de couverture de l'Album en bitmap pour économiser de l'Espace.
+        /// </summary>
         public Bitmap? Cover
         {
             get => _cover;
             private set => this.RaiseAndSetIfChanged(ref _cover, value);
         }
 
-        public AlbumViewModel(Album album)
+
+        /// <summary>
+        /// Sauvegarde localement notre bibliothèque.
+        /// </summary>
+        /// <returns>Rien. Attends la completion d'une tâche.</returns>
+        public async Task SaveToDiskAsync()
         {
-            _album = album;
+            await _album.SaveAsync();
+
+            if(Cover != null)
+            {
+                var bitmap = Cover;
+
+                await Task.Run(() =>
+                {
+                    using (var fs = _album.SaveCoverBitmapStream())
+                    {
+                        bitmap.Save(fs);
+                    }
+                });
+            }
         }
 
         /// <summary>

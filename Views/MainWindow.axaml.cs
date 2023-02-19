@@ -11,12 +11,13 @@ namespace MusicStore.Views
         public MainWindow()
         {
             InitializeComponent();
+            //À l'affichage de la fenêtre, lie ShowDialog du viewModel avec la méthode DoShowDialog
             this.WhenActivated(d => d(ViewModel!.ShowDialog.RegisterHandler(DoShowDialogAsync)));
         }
 
 
         /// <summary>
-        /// Affiche en dialog avec un résultat en retour.
+        /// Affiche une dialog avec un résultat en retour.
         /// </summary>
         /// <param name="interaction">L'affichage de dialog avec un model MusicStoreVM et un AlbumVM en retour</param>
         /// <returns>Un AlbumViewModel (album à acheter) ou null</returns>

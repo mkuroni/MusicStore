@@ -3,6 +3,7 @@
         xmlns:vm="using:MusicStore.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:local="clr-namespace:MusicStore.Views"
         mc:Ignorable="d"
         x:Class="MusicStore.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
@@ -38,6 +39,20 @@
 				<!--Méthode pour ajouter une icone locale-->
 				<PathIcon Data="{StaticResource store_microsoft_regular}"/>
 			</Button>
+			
+			<TextBlock IsVisible="{Binding CollectionEmpty}" Text="On est seul ici. Achetez de la musique pour démarrer votre collection." HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			<ItemsControl Margin="0 40 0 0" Items="{Binding Albums}">
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<WrapPanel/>
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<local:AlbumView Margin="0 0 20 20"/>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
 		</Panel>
 	</Panel>
 </Window>
