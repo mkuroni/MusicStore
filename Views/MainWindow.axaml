@@ -18,8 +18,9 @@
 	<Design.DataContext>
 		<vm:MainWindowViewModel/>
 	</Design.DataContext>
-	<!--Donne un effet acrylique à la fenêtre-->
+	<!--Avalonia permet la création de ses propres Panels-->
 	<Panel>
+	<!--Donne un effet acrylique à la fenêtre-->
 		<ExperimentalAcrylicBorder IsHitTestVisible="False">
 			<ExperimentalAcrylicBorder.Material>
 				<ExperimentalAcrylicMaterial

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,12 +18,7 @@ namespace MusicStore.ViewModels
         private string? _searchText;
         private AlbumViewModel? _selectedAlbum;
 
-        public MusicStoreViewModel()
-        {
-            SearchResults.Add(new AlbumViewModel());
-            SearchResults.Add(new AlbumViewModel());
-            SearchResults.Add(new AlbumViewModel());
-        }
+
 
         /// <summary>
         /// Accesseur pour le texte à rechercher
@@ -54,6 +50,22 @@ namespace MusicStore.ViewModels
         {
             get => _selectedAlbum;
             set => this.RaiseAndSetIfChanged(ref _selectedAlbum, value);
+        }
+
+        /// <summary>
+        /// Commande qui n'a pas besoin de paramètres, mais qui retourne un AlbumViewModel ou null.
+        /// </summary>
+        public ReactiveCommand<Unit, AlbumViewModel?> BuyMusicCommand { get; }
+        public MusicStoreViewModel()
+        {
+            SearchResults.Add(new AlbumViewModel());
+            SearchResults.Add(new AlbumViewModel());
+            SearchResults.Add(new AlbumViewModel());
+
+            BuyMusicCommand = ReactiveCommand.Create(() =>
+            {
+                return SelectedAlbum;
+            });
         }
     }
 }
