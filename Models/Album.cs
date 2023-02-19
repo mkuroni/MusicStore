@@ -78,6 +78,10 @@ namespace MusicStore.Models
                 new Album(x.ArtistName, x.CollectionName, x.ArtworkUrl100.Replace("100x100bb", "600x600bb")));
         }
 
+        /// <summary>
+        /// Charge l'image de couverture d'un album.
+        /// </summary>
+        /// <returns>Retourne un canal pour charger l'image bitmap.</returns>
         public async Task<Stream> LoadCoverBitmapAsync()
         {
             if(File.Exists(CachePath + ".bmp"))

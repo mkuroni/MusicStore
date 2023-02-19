@@ -30,6 +30,10 @@ namespace MusicStore.ViewModels
             IsBusy = true; //Pour l'indicateur visuel
             SearchResults.Clear();
 
+            _cancellationTokenSource?.Cancel(); //À chaque nouvelle recherche, on cancel le loading de l'ancienne recherche.
+            _cancellationTokenSource = new CancellationTokenSource(); //Nouvelle recherche, nouveau token.
+            var cancellationToken = _cancellationTokenSource.Token; //Stocké dans une variable car il peut être remplacé async.
+
             if(!string.IsNullOrWhiteSpace(s)) 
             {
                 var albums = await Album.SearchAsync(s);
@@ -38,12 +42,29 @@ namespace MusicStore.ViewModels
                 {
                     var vm = new AlbumViewModel(album); //La liste d'albums est une liste de viewmodel
                     SearchResults.Add(vm);
+
+                    if (!cancellationToken.IsCancellationRequested) //Charge les images si rendu là, on a pas fait de nouvelle recherche.
+                        LoadCovers(cancellationToken);
                 }
             }
-            IsBusy = false; //Poiur l'indicateur visuel
+            IsBusy = false; //Pour l'indicateur visuel
         }
 
-
+        /// <summary>
+        /// Charge les images de couvertures sur les albums cherchés.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        private async void LoadCovers(CancellationToken cancellationToken)
+        {
+            //Itère sur les albums d'une copie du résultat de la recherche
+            foreach(var album in SearchResults.ToList())
+            {
+                await album.LoadCover();
+                //Permet d'Annuler le loading de l'image pour ne pas stack des threads inutiles.
+                if (cancellationToken.IsCancellationRequested)
+                    return;
+            }
+        }
 
         /// <summary>
         /// Accesseur pour le texte à rechercher
